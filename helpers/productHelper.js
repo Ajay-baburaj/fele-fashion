@@ -72,7 +72,7 @@ export const GetProductsByCategory =async(Id,next)=>{
             categoryName,
             products:products.Items
         }
-        console.log(data)
+       
         return data
     }catch(err){
         next(new AppError(err.message,HttpStatus.UNAUTHORIZED))
