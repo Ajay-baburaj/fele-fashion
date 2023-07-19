@@ -8,8 +8,8 @@ const dynamoDB = new DynamoDBClient({ region: 'ap-south-1', credentials:{accessK
 const documentClient = DynamoDBDocumentClient.from(dynamoDB);
 
 const Tables = {
-  PRODUCTS: 'products',
-  CATEGORY: 'category',
+  PRODUCTS: 'productsOne',
+  CATEGORY: 'categoryOne',
 };
 
 export { dynamoDB,documentClient, Tables };
