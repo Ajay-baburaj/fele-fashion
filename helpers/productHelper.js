@@ -4,7 +4,7 @@ import AppError from "../utils/appError.js";
 import HttpStatus from "../utils/httpStatus.js";
 
 
-export const AddProduct = async (product) => {
+export const AddProduct = async (product,next) => {
     try {
         const productData = await dynamoDB.send(new ScanCommand({ TableName: Tables.PRODUCTS }))
         let id = productData.Count + 1
@@ -33,11 +33,11 @@ export const AddProduct = async (product) => {
         }
         return {message: "Product saved successfully"}
     } catch (err) {
-        throw new AppError(err.message,HttpStatus.UNAUTHORIZED)
+        next(new AppError(err.message,HttpStatus.UNAUTHORIZED))
     }
 }
 
-export const getAllCategories = async()=>{
+export const getAllCategories = async(next)=>{
     try{
         const response = await dynamoDB.send(new ScanCommand({TableName:Tables.CATEGORY,ScanIndexForward: true}))
         const sortedCategories = response.Items.sort((a, b) => a.categoryId - b.categoryId);
@@ -48,13 +48,13 @@ export const getAllCategories = async()=>{
         }
         return data
     }catch(err){
-        throw new AppError(err.message,HttpStatus.UNAUTHORIZED)
+        next(new AppError(err.message,HttpStatus.UNAUTHORIZED))
 
     }
 }
 
 
-export const GetProductsByCategory =async(Id)=>{
+export const GetProductsByCategory =async(Id,next)=>{
     try{
         const filterParameter = {
             TableName: Tables.PRODUCTS,
@@ -75,7 +75,7 @@ export const GetProductsByCategory =async(Id)=>{
         console.log(data)
         return data
     }catch(err){
-        throw new AppError(err.message,HttpStatus.UNAUTHORIZED)
+        next(new AppError(err.message,HttpStatus.UNAUTHORIZED))
 
     }
 }
